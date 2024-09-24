@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RoboRecruit - Upload Resume</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2c3e50;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .robot-icon {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 600px;
+            padding-bottom: 100px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .upload-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .upload-label:hover {
+            background-color: #2980b9;
+        }
+
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: #daf2ff;
+            color: #333;
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: #fff;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        #loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            text-align: center; 
+        }
+
+        #loading img {
+            width: 200px;
+            height: 250px;
+            text-align: center;
+        }
+
+        #dragDropArea {
+            border: 2px dashed #3498db;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        #dragDropArea.hover {
+            background-color: #f0f0f0;
+        }
+        textarea {
+            width: 100%; /* Make the text area take the full width */
+            padding: 10px; /* Add some padding inside the text area */
+            border-radius: 5px; /* Rounded corners */
+            border: 1px solid #ccc; /* Border color */
+            margin-top: 10px; /* Add some space above the text area */
+            margin-bottom: 10px; /* Add space below the text area */
+            background-color: #f7f7f7; /* Background color for the text area */
+            color: #333; /* Text color */
+            font-family: Arial, sans-serif; /* Font */
+            box-sizing: border-box; /* Ensures padding is included in width calculation */
+        }
+
+        textarea:focus {
+            border-color: #3498db; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <img class="robot-icon"
+                src="https://img.icons8.com/color/96/000000/robot-2.png" />
+            <h1>RoboRecruit</h1>
+        </header>
+        <div class="container">
+            <h2>Upload Your Resume</h2>
+            <form id="uploadForm" action="/upload" method="post"
+                enctype="multipart/form-data">
+                <input type="file" name="file" id="fileInput" accept=".pdf"
+                    onchange="displayFileName()">
+                <label class="upload-label" for="fileInput"
+                    id="fileLabel">Choose File</label>
+                <div id="dragDropArea">Drag & Drop your resume here</div>
+
+                <br>
+                <div style="text-align: left;">
+                    <!-- Added container for select elements -->
+                    <label for="type">Select Interview type</label><br>
+                    <select name="interview_type" id="type">
+                        <option value="Technical interview round">Technical
+                            round</option>
+                        <option value="HR interview round">HR round</option>
+                    </select><br>
+                </div>
+
+                <div style="text-align: left;">
+                    <!-- Added container for select elements -->
+                    <label for="lev">Select Difficulty Level for
+                        Questions</label><br>
+                    <select name="level" id="lev">
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                    </select>
+                </div>
+                <div style="text-align: left;">
+                    <label for="jobDescription">Job Description</label><br>
+                    <textarea id="jobDescription" name="job_description" rows="4" cols="50" placeholder="Enter the job description here..." required></textarea>
+                </div>
+
+                <br>
+                <button id="submitBtn" type="submit">Upload</button>
+                <br>
+                {% if response.error %}
+                <p style="color:red;">{{ response.error_message }}</p>
+                {% endif %}
+            </form>
+        </div>
+        <div id="loading">
+            <img src="/static/output-onlinegiftools.gif" alt="Loading...">
+            <br><br>
+            <label for="lev">Resume being processed....</label>
+        </div>
+        <footer>
+            <p>© 2024 RoboRecruit. All rights reserved By COE-AI.</p>
+        </footer>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+    function displayFileName() {
+        var fileInput = document.getElementById('fileInput');
+        var fileLabel = document.getElementById('fileLabel');
+        fileLabel.textContent = fileInput.files[0].name;    
+    }
+
+    $('#uploadForm').submit(function () {
+        $(".container").hide();
+        $('#loading').show();
+    });
+
+    // Drag and drop functionality
+    var dragDropArea = document.getElementById('dragDropArea');
+
+    dragDropArea.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.add('hover');
+    });
+
+    dragDropArea.addEventListener('dragleave', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.remove('hover');
+    });
+
+    dragDropArea.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dragDropArea.classList.remove('hover');
+        var file = e.dataTransfer.files[0];
+        if (file) {
+            var fileInput = document.getElementById('fileInput');
+            fileInput.files = e.dataTransfer.files;
+            displayFileName();
+        }
+    });
+</script>
+    </body>
+</html>
