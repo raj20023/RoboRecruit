@@ -37,53 +37,6 @@ Coclusion:
 RESUME:
 '{resume}'
 """
-# TECHNICAL_HUMAN_PROMPT = """
-# Please summurize this resume and give following points:
-# 1. First section (give point vise answers):-
-# - Detailed summary of the full resume:
-# - Course: e.g btech/bca/bsc
-# - Passout year:
-# - Marks:
-# - Total year of Experience:
-
-# 2. Second section:-
-# details of all project with their involved technologies.(don't give numbers for project)
-# - project (involved technologies): project discription
-
-# 3. Third section:-
-# - Please provide any mistakes that you have found in this resume.
-# - don't give date related mistakes.
-# - Ignore resume formatting mistakes.
-
-# 4. Fourth section:-
-# Please come up with five non codding questions from the resume.(don't give numbers for questions)
-
-# 5. Fifth Section:(Important)
-# Please generate two distinct technical (logical) questions with varying difficulty levels. These questions should be thoroughly explained and accompanied by their respective answers. Ensure that the questions are specifically tailored to coding challenges and refrain from providing common questions readily available on the Internet.
-
-# - Difficulty Level of Questions: {level} (questions sholud be based on difficulty level)
-# - Time to Solve the Question: 15 minutes.
-# - One qustion codding based and one question scenario based.
-
-# Note: Provide only coding questions, along with their answers and explanations.
-
-# follow this notes for fifth section
-# Notes:
-# - quetions and answers both are explained in detail.
-# - Please give all the technical (logical) questions with proper answers.
-# - Don't use common and famous technical (logical) questions.
-
-# 6. Sixth section:
-# - What are the skills required for the job role that the candidate lacks based on their experience and job discription?
-
-
-# Overall resume score based on the Job Discription(out of 100%):
-# - Also give reason why you give this score
-# - Give score accuratly not randomally.
-
-# RESUME:
-# {resume}
-# """
 
 HR_HUMAN_PROMPT = """
 Please summurize this resume and accurate answers of the following points for difficulty level {level}:
