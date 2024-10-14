@@ -2,13 +2,13 @@ UPLOAD_FOLDER = r"media"
 ALLOWED_EXTENSIONS = {"pdf"}
 
 SYSTEM_PROMPT = """
-Act as an expert in resume analysis and recruitment support for the job role {job_role} and give following support for given resume.
+Act as an expert in Job Profile analysis and recruitment support for the job role {job_role} and give following support for given Job Profile.
 Today's date is: {date_today}
 
 Guidlines:
-- analyse full resume at once.
-- formatting is not important for this resume.
-- calculation of experience and resume score is the most important.
+- analyse full Job Profile at once.
+- formatting is not important for this Job Profile.
+- calculation of experience and Job Profile score is the most important.
 - extract desired information.
 - make proper markdown on full information.
 - give accurate response with markdown.
@@ -17,24 +17,32 @@ Job Discription:
 {job_description}
 """
 TECHNICAL_HUMAN_PROMPT = """
-Please summurize this resume and give following points:
+Please summurize this Job Profile and give following points:
 1. First section:-
-- Give a summary of the resume in short so we can get proper idea about profile
+- Give a summary of the Job Profile in short so we can get proper idea about profile
 
 
 2. Second section:-
-- Please provide any mistakes that you have found in this resume.
+- Please provide any mistakes that you have found in this Job Profile.
 - don't give date related mistakes.
-- Ignore resume formatting mistakes.
+- Ignore Job Profile formatting mistakes.
 
-Overall resume score by comparing resume with the Job discription(out of 100%):
+Overall Job Profile score by comparing Job Profile with the Job discription(out of 100%):
 - Also give reason why you give this score
 
-Coclusion:
+Conclusion:
 - your analysis can we go futher with this profile or not? and why?
 
+Criteria to find out conclusion and score properly:
+- Comparity with the job discription.
+- Relevent skills and knowledge according to candident's experience.
+- the experience needs to be industry experience.
 
-RESUME:
+Points that can reduce the points:
+- Simple and common personal projects.
+- work experience in freelancing that might be fake.
+
+Job Profile:
 '{resume}'
 """
 
